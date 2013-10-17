@@ -27,11 +27,11 @@ class nginx (
   $www    = '/var/www' ) {
 
     $options = "--auto --auto-download  --prefix=${installdir}"
-    $passenger_deps = [ 'libcurl4-openssl-dev' ]
+#    $passenger_deps = [ 'libcurl4-openssl-dev' ]
 
     include rvm
 
-    package { $passenger_deps: ensure => present }
+#    package { $passenger_deps: ensure => present }
 
     rvm_system_ruby {
       $ruby_version:
@@ -54,7 +54,7 @@ class nginx (
       command => "/bin/bash -l -i -c \"/usr/local/rvm/gems/${ruby_version}/bin/passenger-install-nginx-module ${options}\"",
       group   => 'root',
       unless  => "/usr/bin/test -d ${installdir}",
-      require => [ Package[$passenger_deps], Rvm_system_ruby[$ruby_version], Rvm_gem["${ruby_version}/passenger"]];
+      require => [ Rvm_system_ruby[$ruby_version], Rvm_gem["${ruby_version}/passenger"]];
     }
 
     file { 'nginx-config':
