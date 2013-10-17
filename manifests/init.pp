@@ -45,7 +45,7 @@ class nginx (
     }
 
     exec { 'create container':
-      command => "/bin/mkdir ${www} && /bin/chown www-data:www-data ${www}",
+      command => "/bin/mkdir ${www} && /bin/chown root:root ${www}",
       unless  => "/usr/bin/test -d ${www}",
       before  => Exec['nginx-install']
     }
